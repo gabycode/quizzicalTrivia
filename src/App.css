@@ -1,0 +1,59 @@
+:root {
+  font-family: Karla, Inter, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f5f7fb;
+  font-size: 16px;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  color: #293264;
+  min-height: 100vh;
+  max-width: 800px;
+  margin: 1em auto;
+  padding: 2em;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.title-desc {
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title,
+.desc {
+  margin: 0.2em;
+}
+
+.start-btn {
+  font-family: "Inter", "sans-serif";
+  font-weight: 500;
+  border: none;
+  border-radius: 15px;
+  padding: 1em 3.8em;
+  margin-top: 1em;
+  background-color: #4d5b9e;
+  color: #f5f7fb;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.start-btn:hover,
+.start-btn:focus {
+  background-color: #455393;
+}
