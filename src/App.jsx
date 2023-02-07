@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import "./Trivia.css";
 import Trivia from "./Trivia";
+import { set } from "lodash";
 
 const App = () => {
   const [questions, setQuestions] = useState([]);
@@ -62,6 +63,30 @@ const App = () => {
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
     setPlayAgain(false);
+    setStartQuiz(false);
+    setShowAnswers(false);
+    setScore("");
+    playGame();
+  };
+
+  const playGame = () => {
+    fetch(
+      "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const shuffledQuestions = data.results.map((question) => {
+          const shuffledAnswers = [
+            ...question.incorrect_answers,
+            question.correct_answer,
+          ].sort(() => Math.random() - 0.5);
+          return { ...question, shuffledAnswers };
+        });
+        setQuestions(shuffledQuestions);
+        setCorrectAnswers(
+          shuffledQuestions.map((question) => question.correct_answer)
+        );
+      });
   };
 
   return (
@@ -99,7 +124,9 @@ const App = () => {
             <p className="desc">Your favorite trivia game</p>
             <button
               className="start-btn"
-              onClick={() => setStartQuiz(!startQuiz)}>
+              onClick={() => {
+                setStartQuiz(!startQuiz);
+              }}>
               Start quiz
             </button>
           </div>
