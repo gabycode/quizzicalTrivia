@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import "./Trivia.css";
 import Trivia from "./Trivia";
-import { set } from "lodash";
+import Categories from "./Categories";
 
 const App = () => {
   const [questions, setQuestions] = useState([]);
@@ -13,10 +13,11 @@ const App = () => {
   const [startQuiz, setStartQuiz] = useState(false);
   const [score, setScore] = useState("");
   const [playAgain, setPlayAgain] = useState(false);
+  const [categoryId, setCategoryId] = useState("");
 
   useEffect(() => {
     fetch(
-      "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
+      `https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -32,7 +33,11 @@ const App = () => {
           shuffledQuestions.map((question) => question.correct_answer)
         );
       });
-  }, []);
+  }, [categoryId]);
+
+  const chooseCategory = (category) => {
+    setCategoryId(category);
+  };
 
   const handleAnswerClick = (questionIndex, answer) => {
     const updatedSelectedAnswers = [...selectedAnswers];
@@ -71,7 +76,7 @@ const App = () => {
 
   const playGame = () => {
     fetch(
-      "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
+      `https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=easy&type=multiple`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -122,6 +127,7 @@ const App = () => {
           <div className="title-desc">
             <h1 className="title">Quizzical</h1>
             <p className="desc">Your favorite trivia game</p>
+            <Categories chooseCategory={chooseCategory} />
             <button
               className="start-btn"
               onClick={() => {
